@@ -53,7 +53,6 @@ a{color:inherit}
 .part-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
 .enq-note{margin:14px 0 0!important;font-size:13px!important;letter-spacing:.03em;opacity:.8}
 .enq-note a{text-underline-offset:3px}
-.reel-meta{display:flex;align-items:center;gap:18px}
 .quote-book{display:flex!important;width:max-content;margin:34px auto 0!important;padding:.75em 1.6em!important;font-size:14px!important;letter-spacing:.02em!important;text-transform:none!important;border-bottom:1px solid var(--pill-solid-bg)!important}
 .quote a:not(.pill){margin-top:22px}
 .menu-cta{text-align:center;margin:56px 0 0}
@@ -154,15 +153,9 @@ dl.facts{margin-left:0;margin-right:0}
 .group .media{position:relative;min-height:440px;overflow:hidden}
 .group .media video,.group .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
-/* gallery (endless loop) and quote */
-.reel-wrap{padding:96px 0 32px}
-.reel-head{max-width:1240px;margin:0 auto 30px;padding:0 44px;display:flex;justify-content:space-between;align-items:end;gap:20px}
-.reel-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,3.4vw,3rem);margin:0;color:var(--head);text-transform:lowercase}
-.reel-head span{font-size:11px;letter-spacing:.22em;text-transform:uppercase;opacity:.55}
 .reel{display:flex;gap:18px;overflow-x:auto;padding:0 44px 8px;scrollbar-width:none;cursor:grab;-webkit-user-select:none;user-select:none}
 .reel::-webkit-scrollbar{display:none}
 .reel.dragging{cursor:grabbing}
-.reel figure{margin:0;flex:0 0 clamp(220px,22vw,330px)}
 .reel img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:8px;pointer-events:none}
 .quote{padding:100px 24px 110px;text-align:center}
 .quote q{display:block;font-family:var(--serif);font-style:italic;quotes:none;font-size:clamp(2.2rem,5.4vw,4.8rem);line-height:1.04;color:var(--head);max-width:12em;margin:0 auto}
@@ -257,14 +250,12 @@ dl.facts{margin-left:0;margin-right:0}
 }
 @media (max-width:640px){
   .head-right{gap:8px} .mode{padding:2px} .mode button{width:28px;height:28px} .mode svg{width:15px;height:15px}
-  .reel-meta>span{display:none}
   .site-header{padding:14px 16px} .site-header.scrolled{padding:8px 16px}
   .brand img{height:58px;width:58px} .scrolled .brand img{height:50px;width:50px} .menu-head .brand img{height:52px;width:52px}
   .head-right .pill--hide{display:none}
   .pill{padding:.7em 1.2em;font-size:13px}
   .hero{padding-top:80px}
   .hero-card{width:calc(100vw - 32px);aspect-ratio:4/5;max-height:62svh;border-radius:14px;margin-top:22px}
-  .reel-head,.reel{padding-left:16px;padding-right:16px}
   .menu-wrap{padding:96px 16px 96px}
   .mrow{gap:6px 18px}
   .mrow.wine,.wine-head{grid-template-columns:1fr 66px 62px;gap:6px 8px}
@@ -286,9 +277,7 @@ dl.facts{margin-left:0;margin-right:0}
 .hold::after{content:"";display:block;height:50svh}
 .hold>*{position:sticky;top:0}
 .hold>.group{min-height:100svh;margin-top:0}
-.hold>.reel-wrap,.hold>.quote{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
-.hold>.reel-wrap{padding:110px 0 40px}
-.hold>.quote{align-items:center}
+.hold--long::after{height:100svh}
 @media (min-width:1101px) and (max-height:820px){
   .intro{padding-top:96px;padding-bottom:20px}
   .intro h1{font-size:clamp(2rem,3.2vw,2.9rem)}
@@ -296,3 +285,17 @@ dl.facts{margin-left:0;margin-right:0}
   .facts{margin-top:16px} .facts div{padding:6px 0}
   .cta-row{margin-top:18px}
 }
+
+/* closing screen: gallery rows above and below "Good times by the river" */
+.quote{--in:0;height:100svh;min-height:520px;padding:96px 0 20px;display:grid;grid-template-rows:auto auto auto;align-content:space-evenly;gap:clamp(18px,3.4svh,36px);text-align:center;overflow:hidden}
+.quote .reel{height:clamp(120px,24svh,300px);padding:0;gap:14px;overflow-x:auto;transition:none}
+.quote .reel figure{flex:0 0 auto;height:100%;margin:0}
+.quote .reel img{height:100%;width:auto;aspect-ratio:4/5;border-radius:8px}
+.quote .reel--top{transform:translateY(calc((1 - var(--in)) * -115%));opacity:var(--in)}
+.quote .reel--bottom{transform:translateY(calc((1 - var(--in)) * 115%));opacity:var(--in)}
+.quote-mid{padding:0 24px}
+.quote q{font-size:clamp(2rem,4.6vw,4.2rem);max-width:none}
+.quote .quote-book{margin:clamp(14px,2.4svh,26px) auto 0!important}
+.quote-mid>a:not(.pill){margin-top:clamp(12px,2svh,20px)}
+@media (max-width:640px){ .quote{padding:84px 0 16px} .quote .reel{gap:10px} }
+@media (prefers-reduced-motion:reduce){ .quote .reel--top,.quote .reel--bottom{transform:none;opacity:1} }
