@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Menus | The Reach Riverside</title>
+<meta name="description" content="Food, cocktails, beers and wine at The Reach Riverside, Fulham Reach.">
+<meta name="theme-color" content="#000047">
+<link rel="icon" href="assets/img/favicon.png">
+<meta property="og:title" content="Menus | The Reach Riverside"><meta property="og:description" content="Food, cocktails, beers and wine at The Reach Riverside, Fulham Reach."><meta property="og:image" content="assets/img/interior-library.jpg">
+<link rel="preload" href="assets/fonts/tinos-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="menus">
+<a class="skip" href="#main">Skip to content</a>
+<header class="menu-head">
+  <a class="brand" href="index.html" aria-label="The Reach Riverside, home"><img class="logo-day" src="assets/img/logo.png" alt="The Reach Riverside"><img class="logo-night" src="assets/img/logo-light.png" alt="The Reach Riverside"></a>
+  <div class="head-right">
+    <a class="pill pill--hide" href="menus.html">View menus</a>
+    <a class="pill pill--solid" href="https://restaurant-1779620176.resos.com/booking" target="_blank" rel="noopener">Book your table</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="overlay"><span></span><span></span></button>
+  </div>
+</header>
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="overlay-top"><img src="assets/img/logo-light.png" alt=""><button class="close" aria-label="Close menu"></button></div>
+  <nav aria-label="Main">
+    <a href="index.html">Home</a><a href="menus.html">Menus</a><a href="about.html">About</a><a href="private-dining.html">Private Dining & Events</a><a href="whats-on.html">What's On</a><a href="contact.html">Contact</a>
+  </nav>
+  <div class="overlay-foot"><span>Goldhurst House, Parr's Way, London W6 9AN</span><a href="tel:02081677999">020 8167 7999</a><a href="mailto:info@thereachbrasserie.com">info@thereachbrasserie.com</a><a href="https://www.instagram.com/thereach.brasserie/" target="_blank" rel="noopener">Instagram</a></div>
+</div>
+
+<main id="main" class="menu-wrap">
+  <h1 class="skip" style="position:absolute;left:-999px">Menus</h1>
+  <div id="menu-root"></div>
+  <p class="menu-foot">Please inform your server of any allergies or intolerances before placing your order.<br>
+  (V) Vegetarian &nbsp;|&nbsp; (VG) Vegan &nbsp;|&nbsp; (GF) Gluten Free &nbsp;|&nbsp; (N) Contains Nuts<br>
+  A discretionary service charge of 12.5% will be added to your bill.</p>
+</main>
+<a class="pill pill--solid float-book" href="https://restaurant-1779620176.resos.com/booking" target="_blank" rel="noopener">Book your table</a>
+<script src="assets/js/menu-data.js"></script>
+<script src="assets/js/menus.js"></script>
+<script src="assets/js/main.js"></script>
+</body></html>
