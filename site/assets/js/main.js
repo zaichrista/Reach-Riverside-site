@@ -27,9 +27,9 @@
 
   /* overlay menu */
   var ov=d.getElementById('overlay'), burger=d.getElementById('burger');
-  function openOv(o){ ov.classList.toggle('open',o); ov.setAttribute('aria-hidden',o?'false':'true'); burger.setAttribute('aria-expanded',o?'true':'false'); d.body.style.overflow=o?'hidden':''; if(o) ov.querySelector('.close').focus(); else burger.focus(); }
+  function openOv(o){ ov.classList.toggle('open',o); d.body.classList.toggle('menu-open',o); ov.setAttribute('aria-hidden',o?'false':'true'); burger.setAttribute('aria-expanded',o?'true':'false'); burger.setAttribute('aria-label',o?'Close menu':'Open menu'); d.body.style.overflow=o?'hidden':''; }
   if(ov&&burger){
-    burger.addEventListener('click',function(){ openOv(true); });
+    burger.addEventListener('click',function(){ openOv(!ov.classList.contains('open')); });
     ov.querySelector('.close').addEventListener('click',function(){ openOv(false); });
     d.addEventListener('keydown',function(e){ if(e.key==='Escape'&&ov.classList.contains('open')) openOv(false); });
     [].forEach.call(ov.querySelectorAll('nav a'),function(a){ a.addEventListener('click',function(){ openOv(false); }); });
@@ -208,28 +208,6 @@
 
 })();
 
-/* hero tree: glow only when the pointer is over the drawn tree, not its transparent surround */
-(function(){
-  var tree=document.querySelector('.hero-tree'), hero=document.querySelector('.hero');
-  if(!tree||!hero||!window.matchMedia('(hover:hover)').matches) return;
-  var cv=document.createElement('canvas'), ctx=cv.getContext('2d',{willReadFrequently:true}), ready=false;
-  function load(){
-    cv.width=tree.naturalWidth; cv.height=tree.naturalHeight;
-    try{ ctx.drawImage(tree,0,0); ctx.getImageData(0,0,1,1); ready=true; }catch(err){ ready=false; }
-  }
-  if(tree.complete&&tree.naturalWidth) load(); else tree.addEventListener('load',load);
-  hero.addEventListener('mousemove',function(e){
-    var on=false;
-    if(ready){
-      var r=tree.getBoundingClientRect();
-      var x=Math.floor((e.clientX-r.left)/r.width*cv.width), y=Math.floor((e.clientY-r.top)/r.height*cv.height);
-      if(x>=0&&y>=0&&x<cv.width&&y<cv.height) on=ctx.getImageData(x,y,1,1).data[3]>40;
-    }
-    tree.classList.toggle('glow',on);
-  });
-  hero.addEventListener('mouseleave',function(){ tree.classList.remove('glow'); });
-})();
-
 /* phone: the tree runs from the bottom of the hero up to the bottom of the centre logo */
 (function(){
   var hero=document.querySelector('.hero'), cue=document.querySelector('.hero-card .mark');
@@ -240,5 +218,36 @@
   }
   place(); window.addEventListener('resize',place); window.addEventListener('load',place);
   if(cue.complete===false) cue.addEventListener('load',place);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(place);
+})();
+
+/* desktop: point the arrow from the C of "Celebrate" to the star, whatever the window size */
+(function(){
+  var hero=document.querySelector('.hero'), arrow=document.querySelector('.hero-arrow'), msg=document.querySelector('.hero-msg'), wrap=document.querySelector('.hero-tree-wrap');
+  if(!hero||!arrow||!msg||!wrap) return;
+  var H={x:.01,y:.61}, T={x:.98,y:.94}, AR=600/141;   /* arrow head and tail as fractions of the drawing */
+  function place(){
+    if(window.innerWidth<=640){ arrow.classList.remove('on'); return; }
+    var hr=hero.getBoundingClientRect(), mr=msg.getBoundingClientRect(), wr=wrap.getBoundingClientRect();
+    if(!mr.width||!wr.width) return;
+    var starX=wr.left+wr.width*.523-hr.left, starY=wr.top+wr.height*.04-hr.top, starW=wr.width*.3;
+    var tx=mr.left-hr.left+mr.width*.082, ty=mr.top-hr.top+mr.height*.17;  /* the upper curl of the C */
+    var hx=starX+starW*.47+8, hy=starY+starW*.03+3;                      /* just clear of the star's rightmost point */
+    var gx=hx-tx, gy=hy-ty, gl=Math.hypot(gx,gy)||1;
+    tx+=gx/gl*9; ty+=gy/gl*9;                                            /* and just clear of the C */
+    var dx=hx-tx, dy=hy-ty, d=Math.hypot(dx,dy);
+    var lift=Math.max(10,mr.height*.14); tx+=0; ty-=lift; hx+=0; hy-=lift;   /* same size and angle, begun above the C */
+    if(d<14){ arrow.classList.remove('on'); return; }
+    var w0=1000, h0=w0/AR;                                              /* natural size, only for the angle */
+    var nx=(H.x-T.x)*w0, ny=(H.y-T.y)*h0, n=Math.hypot(nx,ny);
+    var W=d/n*w0, Hh=W/AR, ang=Math.atan2(dy,dx)-Math.atan2(ny,nx);
+    arrow.style.width=W+'px'; arrow.style.height=Hh+'px';
+    arrow.style.left=(tx-T.x*W)+'px'; arrow.style.top=(ty-T.y*Hh)+'px';
+    arrow.style.transformOrigin=(T.x*100)+'% '+(T.y*100)+'%';
+    arrow.style.transform='rotate('+ang+'rad)';
+    arrow.classList.add('on');
+  }
+  place(); window.addEventListener('resize',place); window.addEventListener('load',place);
+  if(msg.complete===false) msg.addEventListener('load',place);
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(place);
 })();

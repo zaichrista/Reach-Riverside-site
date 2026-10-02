@@ -19,13 +19,13 @@
     <a class="pill pill--hide" href="menus.html">View menus</a>
     <a class="pill pill--solid" href="https://restaurant-1779620176.resos.com/booking" target="_blank" rel="noopener">Book your table</a>
     <button type="button" class="mode-btn" data-theme-toggle aria-label="Switch to nighttime view" title="Switch to nighttime view"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M5.2 18.8l1.7-1.7M17.1 6.9l1.7-1.7"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
-    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="overlay"><span></span><span></span></button>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="overlay"><span></span><span></span><span></span></button>
   </div>
 </header>
 <div class="overlay" id="overlay" aria-hidden="true">
   <div class="overlay-top"><img src="assets/img/logo-light.png" alt=""><button class="close" aria-label="Close menu"></button></div>
   <nav aria-label="Main">
-    <a href="index.html">Home</a><a href="menus.html">Menus</a><a href="about.html">About</a><a href="private-dining.html">Private Dining & Events</a><a href="whats-on.html">What's On</a><a href="contact.html">Contact</a>
+    <a href="index.html">Home</a><a href="menus.html">Menus</a><a href="about.html">About</a><a href="private-dining.html">Private Dining & Events</a><a class="nav-xmas" href="christmas.html">Christmas</a><a href="contact.html">Contact</a>
     <a class="pill pill--gold overlay-book" href="https://restaurant-1779620176.resos.com/booking" target="_blank" rel="noopener">Book your table</a>
   </nav>
   <div class="overlay-foot"><span>Goldhurst House, Parr's Way, London W6 9AN</span><a href="tel:02081677999">020 8167 7999</a><a href="mailto:info@thereachbrasserie.com">info@thereachbrasserie.com</a><a href="https://www.instagram.com/thereachriverside/" target="_blank" rel="noopener">Instagram</a></div>
@@ -33,12 +33,16 @@
 
 <main id="main">
 <section class="hero" aria-label="Welcome">
+  <img class="hero-msg" src="assets/img/christmas-message.png" alt="Celebrate Christmas with us!" width="1100" height="175">
+  <img class="hero-arrow" src="assets/img/arrow.png" alt="" aria-hidden="true" width="600" height="141">
   <p class="clock">Local time at The Reach: <span id="clock">&nbsp;</span></p>
   <div class="hero-stage">
     <div class="hero-tree-wrap">
-      <img class="hero-tree" src="assets/img/christmas-tree.webp" alt="" width="1024" height="1535">
-      <img class="hero-msg" src="assets/img/christmas-message.webp" alt="Celebrate Christmas with us!" width="1200" height="401">
+      <div class="hero-shake">
+      <a class="hero-tree-link" href="christmas.html" tabindex="-1" aria-hidden="true"><img class="hero-tree" src="assets/img/christmas-tree.webp" alt="" width="1024" height="1535"></a>
       <a class="hero-star" href="christmas.html" aria-label="Christmas at The Reach"><img src="assets/img/star.webp" alt="" width="800" height="783"></a>
+      </div>
+      <span class="hero-tap" aria-hidden="true">tap me!</span>
     </div>
   <div class="hero-card">
     <img class="bg" src="assets/img/interior-library.jpg" alt="The dining room at The Reach Riverside, with pink banquettes beneath a wall of books">
@@ -58,7 +62,7 @@
     <p>From relaxed lunches and leisurely afternoons to dinner by the river, there's something for every occasion.</p>
     <p>Whether you're joining us for a quick bite, sharing plates with friends or settling in for the evening, expect delicious food, generous portions and dishes you'll want to come back for.</p>
     <dl class="facts">
-  <div><dt>Opening hours</dt><dd>Every day, 11am – 11pm</dd></div>
+  <div><dt>Opening hours</dt><dd>Every day, 11am – 12am</dd></div>
   <div><dt>Address</dt><dd>Goldhurst House, Parr's Way, London W6 9AN</dd></div>
   <div><dt>How to get there</dt><dd><a href="https://www.google.com/maps/search/?api=1&query=Goldhurst+House+Parr%27s+Way+London+W6+9AN" target="_blank" rel="noopener">View on Google Maps</a></dd></div>
   <div><dt>Phone</dt><dd><a href="tel:02081677999" style="text-decoration:none">020 8167 7999</a></dd></div>
@@ -134,7 +138,7 @@
     <p class="enq-note">or email <a href="mailto:info@thereachbrasserie.com?subject=Private%20dining%20enquiry">info@thereachbrasserie.com</a></p>
   </div>
   <div class="media rv">
-    <video data-autoplay autoplay muted loop playsinline preload="metadata" poster="assets/img/video-poster.jpg" aria-label="Sharing plates laid out on a long table"><source src="assets/video/riverside.mp4" type="video/mp4"></video>
+    <img src="assets/img/video-poster.jpg" alt="Sharing plates laid out on a long table" width="1600" height="2844" loading="lazy">
   </div>
 </section>
 
@@ -177,7 +181,7 @@
         <p><a href="https://www.instagram.com/thereachriverside/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg></a></p></div>
     </div>
     <div>
-      <div class="foot-block"><h3>Opening hours</h3><p>Every day<br>11am – 11pm</p></div>
+      <div class="foot-block"><h3>Opening hours</h3><p>Every day<br>11am – 12am</p></div>
       <div class="foot-block"><h3>Reservations</h3><p><a class="pill pill--gold" href="https://restaurant-1779620176.resos.com/booking" target="_blank" rel="noopener">Book your table</a></p></div>
     </div>
     <div>
