@@ -6,10 +6,14 @@
   function setTheme(t){
     if(t==='night') root.setAttribute('data-theme','night'); else root.removeAttribute('data-theme');
     [].forEach.call(d.querySelectorAll('[data-theme-set]'),function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-theme-set')===t?'true':'false'); });
+    /* header icon shows the current mode (sun by day, moon by night); clicking switches to the other */
+    var next=t==='night'?'daytime':'nighttime';
+    [].forEach.call(d.querySelectorAll('[data-theme-toggle]'),function(b){ b.setAttribute('aria-label','Switch to '+next+' view'); b.title='Switch to '+next+' view'; });
     ls('reach-theme',t);
   }
   setTheme(ls('reach-theme')==='night'?'night':'day');
   [].forEach.call(d.querySelectorAll('[data-theme-set]'),function(b){ b.addEventListener('click',function(){ setTheme(b.getAttribute('data-theme-set')); }); });
+  [].forEach.call(d.querySelectorAll('[data-theme-toggle]'),function(b){ b.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='night'?'day':'night'); }); });
 
   /* London clock */
   var clock=d.getElementById('clock');
@@ -152,19 +156,22 @@
     wrapPos(); requestAnimationFrame(drift);
   }
   var reels=[].slice.call(d.querySelectorAll('.reel'));
-  /* the site's own gallery photos, taken from the top row before it is refilled */
-  var house=reels.length?[].map.call(reels[0].querySelectorAll('img'),function(im){ return {src:im.getAttribute('src'),alt:im.alt,href:null}; }):[];
+  /* the site's own gallery photos, taken from the top row before it is refilled; they link to the Instagram profile */
+  var IG_PROFILE='https://www.instagram.com/thereachriverside/';
+  var house=reels.length?[].map.call(reels[0].querySelectorAll('img'),function(im){ return {src:im.getAttribute('src'),alt:im.alt,href:IG_PROFILE}; }):[];
+  function lay(tiles){ var half=Math.ceil(tiles.length/2);
+    reels.forEach(function(reel,i){ fillReel(reel,i?tiles.slice(half).concat(tiles.slice(0,half)):tiles,i>0); }); }
   if(reels.length){
     var started=false;
-    function startReels(){ if(started) return; started=true; reels.forEach(initReel); }
+    /* without the feed, the rows show the site photos alone (still linking to the profile) */
+    function startReels(){ if(started) return; started=true; if(!reels[0].querySelector('a')) lay(house); reels.forEach(initReel); }
     var giveUp=setTimeout(startReels,4000);
     if(window.fetch){
       fetch(IG_FEED).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(feed){
         var ig=igTiles(feed); if(started||ig.length<2) return startReels();
         var tiles=weave(ig,house);
         clearTimeout(giveUp);
-        var half=Math.ceil(tiles.length/2);
-        reels.forEach(function(reel,i){ fillReel(reel,i?tiles.slice(half).concat(tiles.slice(0,half)):tiles,i>0); });
+        lay(tiles);
         startReels();
       }).catch(startReels);
     } else startReels();
