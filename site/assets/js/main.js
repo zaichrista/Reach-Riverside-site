@@ -220,7 +220,7 @@
   if(tree.complete&&tree.naturalWidth) load(); else tree.addEventListener('load',load);
   hero.addEventListener('mousemove',function(e){
     var on=false;
-    if(ready&&!e.target.closest('.hero-card')){
+    if(ready){
       var r=tree.getBoundingClientRect();
       var x=Math.floor((e.clientX-r.left)/r.width*cv.width), y=Math.floor((e.clientY-r.top)/r.height*cv.height);
       if(x>=0&&y>=0&&x<cv.width&&y<cv.height) on=ctx.getImageData(x,y,1,1).data[3]>40;

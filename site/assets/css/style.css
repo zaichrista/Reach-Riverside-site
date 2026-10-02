@@ -85,7 +85,7 @@ html[data-theme="night"] .hero{background:radial-gradient(55% 50% at 8% 18%,rgba
 .clock{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--fg);margin:0}
 .hero-stage{display:contents}
 .hero-tree-wrap{--th:88svh;--W:calc(var(--th) * 1024 / 1535);--c:max(calc((100vw - var(--cw)) / 2),calc(var(--W) / 2));position:absolute;bottom:0;height:var(--th);width:var(--W);left:calc(var(--c) - var(--W) / 2);pointer-events:none}
-.hero-tree{position:absolute;inset:0;z-index:0;width:100%;height:100%;user-select:none;pointer-events:none;transition:filter .5s ease}
+.hero-tree{position:absolute;inset:0;z-index:2;width:100%;height:100%;user-select:none;pointer-events:none;transition:filter .5s ease}
 .hero-star{position:absolute;z-index:3;left:52.3%;top:4%;width:30%;transform:translate(-50%,-50%);pointer-events:auto;transition:filter .4s ease,transform .4s ease}
 .hero-star img{display:block;width:100%;height:auto}
 .hero-msg{--mw:max(0px,min(calc(var(--W) * .55),calc((var(--c) - var(--W) * .14 - 8px) / .97)));position:absolute;z-index:2;width:var(--mw);height:auto;left:calc(36% - var(--mw) * .97);top:calc(4% - var(--mw) * .124);pointer-events:none;user-select:none;filter:drop-shadow(0 0 1px #f4efe2) drop-shadow(0 0 1px #f4efe2) drop-shadow(0 0 2px #f4efe2) drop-shadow(0 0 5px rgba(244,239,226,.8))}
@@ -460,3 +460,18 @@ html[data-theme="night"] .xmas .mh,html[data-theme="night"] .xmas .mrow{border-c
 .x-hold .facts div{padding:6px 0}
 .x-hold .x-det .cta-row{margin-top:16px}
 @media (max-width:1100px){ .x-hold .x-two{padding:28px 22px 32px} }
+
+/* christmas: the details start level with the form, below the intro line */
+.x-hold .x-enq{display:contents}
+.x-hold .x-enq>p{grid-column:1;grid-row:2;margin:0 0 4px}
+.x-hold .x-enq>#enquiry-root{grid-column:1;grid-row:3}
+.x-hold .x-det{grid-row:3;margin-top:16px}
+.x-hold .form{margin-top:12px}
+@media (max-width:1100px){ .x-hold .x-enq>p,.x-hold .x-enq>#enquiry-root,.x-hold .x-det{grid-column:1;grid-row:auto} .x-hold .x-det{margin-top:28px} }
+
+/* christmas: details column runs the height of the form, its button level with the submit button */
+.x-hold .x-det{align-self:stretch;display:flex;flex-direction:column;margin-top:12px}
+.x-hold .x-det .facts{flex:1;display:flex;flex-direction:column}
+.x-hold .x-det .facts div{flex:1;align-items:center}
+.x-hold .x-det .cta-row{margin-top:16px}
+@media (max-width:1100px){ .x-hold .x-det .facts div{flex:none} }

@@ -2,8 +2,9 @@
    Fields, labels, required marks and the thank-you text all come from the form in the Wix dashboard. */
 import { createFormStore, FORM_ERROR } from '../../js/wix/form-store.js';
 
-var FORM_ID = 'f7951ef6-cde3-47a8-9789-737f9084dc3a';
+var DEFAULT_FORM_ID = 'f7951ef6-cde3-47a8-9789-737f9084dc3a';
 var root = document.getElementById('enquiry-root');
+var FORM_ID = (root && root.getAttribute('data-form-id')) || DEFAULT_FORM_ID;
 if (root) {
   var store = createFormStore({ formId: FORM_ID });
   var formEl = null, sig = '', els = {};
@@ -74,9 +75,11 @@ if (root) {
     foot.appendChild(els.formErr);
     els.btn = el('button', { class: 'pill pill--solid', type: 'submit' }, form.submitText || 'Send enquiry');
     foot.appendChild(els.btn);
+    if (!root.hasAttribute('data-no-alt')) {
     foot.appendChild(document.createTextNode(' '));
     var alt = el('a', { class: 'pill', href: 'https://restaurant-1779620176.resos.com/booking', target: '_blank', rel: 'noopener' }, 'Book a table instead');
     foot.appendChild(alt);
+    }
     formEl.appendChild(foot);
     formEl.addEventListener('submit', function (e) { e.preventDefault(); store.submit(e); });
     root.replaceChildren(formEl);
