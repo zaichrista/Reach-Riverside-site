@@ -100,10 +100,35 @@
     roastZoom();
   }
 
-  /* closing gallery: two endless rows drifting in opposite directions, draggable and swipeable */
-  [].forEach.call(d.querySelectorAll('.reel'),function(reel){
+  /* closing gallery: latest Instagram posts (via Behold) mixed with the site's photos; site photos alone if the feed is unavailable */
+  var IG_FEED='https://feeds.behold.so/HKJoF9LjWSR1jA9mZCdZ';
+  function igTiles(feed){
+    var tiles=[];
+    (feed&&feed.posts||[]).forEach(function(p){
+      if(p.visibility&&p.visibility!=='visible') return;
+      var alt=(p.prunedCaption||p.caption||'').replace(/\s+/g,' ').trim();
+      alt=alt?'Instagram post: '+(alt.length>110?alt.slice(0,107)+'…':alt):'Instagram post from The Reach Riverside';
+      var media=p.mediaType==='CAROUSEL_ALBUM'&&p.children&&p.children.length?p.children:[p];
+      media.forEach(function(m){ var s=m.sizes&&(m.sizes.medium||m.sizes.small); var src=s&&s.mediaUrl||(m.mediaType==='VIDEO'?m.thumbnailUrl:m.mediaUrl)||p.thumbnailUrl;
+        if(src) tiles.push({src:src,href:p.permalink,alt:alt}); });
+    });
+    return tiles;
+  }
+  /* weave Instagram posts and the site's own photos together, alternating */
+  function weave(a,b){ var out=[], i=0; while(i<a.length||i<b.length){ if(i<a.length) out.push(a[i]); if(i<b.length) out.push(b[i]); i++; } return out; }
+  function fillReel(reel,tiles,hidden){
+    reel.innerHTML='';
+    tiles.forEach(function(t){
+      var f=d.createElement('figure'), im=d.createElement('img'), box=f;
+      if(t.href){ box=d.createElement('a'); box.href=t.href; box.target='_blank'; box.rel='noopener'; if(hidden) box.tabIndex=-1; f.appendChild(box); }
+      im.src=t.src; im.alt=hidden?'':t.alt; im.decoding='async';
+      box.appendChild(im); reel.appendChild(f);
+    });
+  }
+  function initReel(reel){
     var orig=[].slice.call(reel.children), n=orig.length, dir=+reel.getAttribute('data-dir')||1;
-    for(var k=0;k<3;k++) orig.forEach(function(f){ var c=f.cloneNode(true); c.setAttribute('aria-hidden','true'); var im=c.querySelector('img'); if(im){ im.alt=''; im.removeAttribute('loading'); } reel.appendChild(c); });
+    if(!n) return;
+    for(var k=0;k<3;k++) orig.forEach(function(f){ var c=f.cloneNode(true); c.setAttribute('aria-hidden','true'); var im=c.querySelector('img'); if(im){ im.alt=''; im.removeAttribute('loading'); } var a=c.querySelector('a'); if(a) a.tabIndex=-1; reel.appendChild(c); });
     function setW(){ return reel.children[n].offsetLeft-reel.children[0].offsetLeft; }
     var pos=0, hold=false, resume=0, prev=0;
     function wrapPos(){ var w=setW(); if(!w) return; while(pos<w) pos+=w; while(pos>=2*w) pos-=w; reel.scrollLeft=pos; }
@@ -113,16 +138,37 @@
     reel.addEventListener('mouseleave',function(){ pause(400); });
     reel.addEventListener('touchstart',function(){ pause(2500); },{passive:true});
     reel.addEventListener('wheel',function(){ pause(2500); },{passive:true});
-    var dragX=null, dragPos=0;
-    reel.addEventListener('mousedown',function(e){ dragX=e.clientX; dragPos=pos; reel.classList.add('dragging'); e.preventDefault(); });
-    window.addEventListener('mousemove',function(e){ if(dragX===null) return; pos=dragPos-(e.clientX-dragX); wrapPos(); dragPos=pos+(e.clientX-dragX); });
+    var dragX=null, dragPos=0, moved=0;
+    reel.addEventListener('mousedown',function(e){ dragX=e.clientX; dragPos=pos; moved=0; reel.classList.add('dragging'); e.preventDefault(); });
+    window.addEventListener('mousemove',function(e){ if(dragX===null) return; moved=Math.max(moved,Math.abs(e.clientX-dragX)); pos=dragPos-(e.clientX-dragX); wrapPos(); dragPos=pos+(e.clientX-dragX); });
     window.addEventListener('mouseup',function(){ if(dragX===null) return; dragX=null; reel.classList.remove('dragging'); });
+    /* a drag should not also open the post */
+    reel.addEventListener('click',function(e){ if(moved>6){ e.preventDefault(); moved=0; } },true);
     function drift(t){ var dt=prev?Math.min(t-prev,64):16.7; prev=t;
       if(!hold&&dragX===null&&!reduced){ pos+=dt*.026*dir; wrapPos(); }
       requestAnimationFrame(drift); }
     window.addEventListener('load',wrapPos); window.addEventListener('resize',wrapPos);
+    [].forEach.call(reel.querySelectorAll('img'),function(im){ if(!im.complete) im.addEventListener('load',wrapPos); });
     wrapPos(); requestAnimationFrame(drift);
-  });
+  }
+  var reels=[].slice.call(d.querySelectorAll('.reel'));
+  /* the site's own gallery photos, taken from the top row before it is refilled */
+  var house=reels.length?[].map.call(reels[0].querySelectorAll('img'),function(im){ return {src:im.getAttribute('src'),alt:im.alt,href:null}; }):[];
+  if(reels.length){
+    var started=false;
+    function startReels(){ if(started) return; started=true; reels.forEach(initReel); }
+    var giveUp=setTimeout(startReels,4000);
+    if(window.fetch){
+      fetch(IG_FEED).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(feed){
+        var ig=igTiles(feed); if(started||ig.length<2) return startReels();
+        var tiles=weave(ig,house);
+        clearTimeout(giveUp);
+        var half=Math.ceil(tiles.length/2);
+        reels.forEach(function(reel,i){ fillReel(reel,i?tiles.slice(half).concat(tiles.slice(0,half)):tiles,i>0); });
+        startReels();
+      }).catch(startReels);
+    } else startReels();
+  }
 
   /* the gallery rows scroll into place above and below the line as you arrive */
   var quote=d.querySelector('.quote');

@@ -299,3 +299,6 @@ dl.facts{margin-left:0;margin-right:0}
 .quote-mid>a:not(.pill){margin-top:clamp(12px,2svh,20px)}
 @media (max-width:640px){ .quote{padding:84px 0 16px} .quote .reel{gap:10px} }
 @media (prefers-reduced-motion:reduce){ .quote .reel--top,.quote .reel--bottom{transform:none;opacity:1} }
+.quote .reel a{display:block;height:100%;margin:0;padding:0;border:0;letter-spacing:0}
+.quote .reel a img{transition:opacity .4s}
+.quote .reel a:hover img{opacity:.85}
