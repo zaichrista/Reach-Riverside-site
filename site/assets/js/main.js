@@ -207,3 +207,38 @@
   });
 
 })();
+
+/* hero tree: glow only when the pointer is over the drawn tree, not its transparent surround */
+(function(){
+  var tree=document.querySelector('.hero-tree'), hero=document.querySelector('.hero');
+  if(!tree||!hero||!window.matchMedia('(hover:hover)').matches) return;
+  var cv=document.createElement('canvas'), ctx=cv.getContext('2d',{willReadFrequently:true}), ready=false;
+  function load(){
+    cv.width=tree.naturalWidth; cv.height=tree.naturalHeight;
+    try{ ctx.drawImage(tree,0,0); ctx.getImageData(0,0,1,1); ready=true; }catch(err){ ready=false; }
+  }
+  if(tree.complete&&tree.naturalWidth) load(); else tree.addEventListener('load',load);
+  hero.addEventListener('mousemove',function(e){
+    var on=false;
+    if(ready&&!e.target.closest('.hero-card')){
+      var r=tree.getBoundingClientRect();
+      var x=Math.floor((e.clientX-r.left)/r.width*cv.width), y=Math.floor((e.clientY-r.top)/r.height*cv.height);
+      if(x>=0&&y>=0&&x<cv.width&&y<cv.height) on=ctx.getImageData(x,y,1,1).data[3]>40;
+    }
+    tree.classList.toggle('glow',on);
+  });
+  hero.addEventListener('mouseleave',function(){ tree.classList.remove('glow'); });
+})();
+
+/* phone: the tree runs from the bottom of the hero up to the bottom of the centre logo */
+(function(){
+  var hero=document.querySelector('.hero'), cue=document.querySelector('.hero-card .mark');
+  if(!hero||!cue) return;
+  function place(){
+    var h=hero.getBoundingClientRect(), c=cue.getBoundingClientRect();
+    hero.style.setProperty('--cue-th',Math.max(80,Math.round(h.bottom-c.bottom))+'px');
+  }
+  place(); window.addEventListener('resize',place); window.addEventListener('load',place);
+  if(cue.complete===false) cue.addEventListener('load',place);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(place);
+})();
