@@ -18,11 +18,6 @@ window.MENU = [
     ["Burrata, Tomato & Basil Oil","15","","V GF"],["Classic Prawn Cocktail","15","Marie Rose sauce, gem lettuce & cucumber"],
     ["Greek Salad","15","Feta, capers & fresh mint","V GF"],
     ["Goat's Cheese Salad","15","Tomato, rocket, roasted pine nuts, walnuts & honey","V"]]},
-  {id:"pizza", group:"Food", title:"Pizza", items:[
-    ["Margherita","15","Tomato, mozzarella, fresh basil"],["Pepperoni","15","Tomato, mozzarella, pepperoni"],
-    ["Mediterranean Vegetable","15","Roasted peppers, courgette, artichoke, olives, mozzarella, basil","V"],
-    "#Add to your pizza",
-    ["Extra Cheese","2"],["Pepperoni","2"],["Mushrooms","2"],["Red Onions","1.50"],["Olives","1.50"],["Roasted Peppers","2"]]},
   {id:"riverside-classics", group:"Food", title:"Riverside Classics", items:[
     ["The Reach Cheeseburger","22","Angus beef patty, mature cheddar, lettuce, tomato, burger sauce & fries. Add bacon £3"],
     ["Fish & Chips","24","Beer-battered haddock, peas, tartare sauce & charred lemon"],

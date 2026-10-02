@@ -192,6 +192,9 @@
   /* video respects reduced motion */
   var v=d.querySelector('video[data-autoplay]');
   if(v&&reduced){ v.removeAttribute('autoplay'); v.pause(); }
+  else if(v){ v.muted=true; var tryPlay=function(){ var q=v.play(); if(q&&q.catch) q.catch(function(){}); };
+    if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) tryPlay(); }); },{threshold:.01}).observe(v); }
+    v.addEventListener('loadeddata',tryPlay); window.addEventListener('resize',function(){ if(v.paused) tryPlay(); }); tryPlay(); }
 
   /* email links: open the mail app, and copy the address in case no mail app is set up */
   var toast=null, toastT=0;
