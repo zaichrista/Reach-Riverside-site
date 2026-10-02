@@ -1,0 +1,43 @@
+{
+  "forms": [
+    {
+      "name": "Private dining enquiry",
+      "formId": "f7951ef6-cde3-47a8-9789-737f9084dc3a",
+      "created": true,
+      "fields": [
+        {
+          "target": "name_c8p2wu",
+          "label": "Name"
+        },
+        {
+          "target": "email_abj91d",
+          "label": "Email"
+        },
+        {
+          "target": "phone_2t4f0v",
+          "label": "Phone"
+        },
+        {
+          "target": "date_6h8pfd",
+          "label": "Date"
+        },
+        {
+          "target": "number_of_guests_lpwanh",
+          "label": "Number of guests"
+        },
+        {
+          "target": "occasion_l777f2",
+          "label": "Occasion"
+        },
+        {
+          "target": "message_s6ewcn",
+          "label": "Message"
+        }
+      ],
+      "fieldsLive": 7,
+      "steps": 1,
+      "rules": 0,
+      "degraded": []
+    }
+  ]
+}

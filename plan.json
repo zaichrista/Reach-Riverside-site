@@ -1,0 +1,18 @@
+{
+  "forms": [
+    {
+      "name": "Private dining enquiry",
+      "submitText": "Send enquiry",
+      "thankYou": "Thank you for your enquiry. Our team will come back to you.",
+      "fields": [
+        { "label": "Name", "kind": "text", "required": true },
+        { "label": "Email", "kind": "email", "required": true },
+        { "label": "Phone", "kind": "phone", "country": "GB" },
+        { "label": "Date", "kind": "date" },
+        { "label": "Number of guests", "kind": "number", "min": 1, "step": 1 },
+        { "label": "Occasion", "kind": "text", "placeholder": "Birthday, work dinner, celebration" },
+        { "label": "Message", "kind": "textarea" }
+      ]
+    }
+  ]
+}
