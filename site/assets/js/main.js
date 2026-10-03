@@ -27,11 +27,26 @@
 
   /* overlay menu */
   var ov=d.getElementById('overlay'), burger=d.getElementById('burger');
-  function openOv(o){ ov.classList.toggle('open',o); d.body.classList.toggle('menu-open',o); ov.setAttribute('aria-hidden',o?'false':'true'); burger.setAttribute('aria-expanded',o?'true':'false'); burger.setAttribute('aria-label',o?'Close menu':'Open menu'); d.body.style.overflow=o?'hidden':''; }
+  /* while the menu is open the page behind it is inert, so keyboard and screen-reader users stay inside the menu */
+  function setInert(o){
+    [].forEach.call(d.querySelectorAll('body>main,body>footer,body>.timeline,.brand,.head-right>*:not(.burger)'),function(n){ if(o) n.setAttribute('inert',''); else n.removeAttribute('inert'); });
+  }
+  function openOv(o){ setInert(o); ov.classList.toggle('open',o); d.body.classList.toggle('menu-open',o); ov.setAttribute('aria-hidden',o?'false':'true'); burger.setAttribute('aria-expanded',o?'true':'false'); burger.setAttribute('aria-label',o?'Close menu':'Open menu'); d.body.style.overflow=o?'hidden':'';
+    if(o){ var first=ov.querySelector('nav a'); if(first) setTimeout(function(){ first.focus({preventScroll:true}); },60); }
+    else if(d.activeElement&&ov.contains(d.activeElement)) burger.focus({preventScroll:true}); }
   if(ov&&burger){
+    /* the burger is the visible close control; the hidden duplicate must not be a tab stop */
+    var xb=ov.querySelector('.close'); xb.tabIndex=-1; xb.setAttribute('aria-hidden','true');
     burger.addEventListener('click',function(){ openOv(!ov.classList.contains('open')); });
     ov.querySelector('.close').addEventListener('click',function(){ openOv(false); });
-    d.addEventListener('keydown',function(e){ if(e.key==='Escape'&&ov.classList.contains('open')) openOv(false); });
+    d.addEventListener('keydown',function(e){
+      if(!ov.classList.contains('open')) return;
+      if(e.key==='Escape'){ openOv(false); burger.focus({preventScroll:true}); return; }
+      if(e.key!=='Tab') return;
+      var ring=[burger].concat([].slice.call(ov.querySelectorAll('nav a,.overlay-foot a'))), i=ring.indexOf(d.activeElement);
+      if(e.shiftKey&&(i<=0)){ e.preventDefault(); ring[ring.length-1].focus(); }
+      else if(!e.shiftKey&&(i===ring.length-1||i<0)){ e.preventDefault(); ring[0].focus(); }
+    });
     [].forEach.call(ov.querySelectorAll('nav a'),function(a){ a.addEventListener('click',function(){ openOv(false); }); });
   }
 
@@ -59,10 +74,12 @@
     window.addEventListener('wheel',function(e){
       if(e.ctrlKey||e.defaultPrevented||d.body.style.overflow==='hidden') return;
       if(Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
+      /* trackpads and smooth-scrolling mice send small, frequent steps: leave those to the browser. Only notched wheels are eased. */
+      if(e.deltaMode===0&&Math.abs(e.deltaY)<50) return;
       e.preventDefault();
       var dy=e.deltaMode===1?e.deltaY*32:e.deltaMode===2?e.deltaY*window.innerHeight:e.deltaY;
       if(!raf){ target=cur=window.scrollY; }
-      glide(target+dy*.85,.06);
+      glide(target+dy,.14);
     },{passive:false});
     window.addEventListener('scroll',function(){ if(!raf){ target=cur=window.scrollY; } },{passive:true});
     ['keydown','mousedown','touchstart'].forEach(function(ev){ window.addEventListener(ev,function(){ if(raf){ cancelAnimationFrame(raf); raf=0; lastT=0; target=cur=window.scrollY; } },{passive:true}); });
@@ -148,7 +165,10 @@
     window.addEventListener('mouseup',function(){ if(dragX===null) return; dragX=null; reel.classList.remove('dragging'); });
     /* a drag should not also open the post */
     reel.addEventListener('click',function(e){ if(moved>6){ e.preventDefault(); moved=0; } },true);
-    function drift(t){ var dt=prev?Math.min(t-prev,64):16.7; prev=t;
+    var seen=true, dead=false;
+    if('IntersectionObserver' in window) new IntersectionObserver(function(es){ seen=es[0].isIntersecting; if(seen&&dead){ dead=false; prev=0; requestAnimationFrame(drift); } },{rootMargin:'120px'}).observe(reel);
+    function drift(t){ if(!seen||d.hidden){ dead=true; prev=0; if(d.hidden) d.addEventListener('visibilitychange',function w(){ if(!d.hidden){ d.removeEventListener('visibilitychange',w); if(dead&&seen){ dead=false; requestAnimationFrame(drift); } } }); return; }
+      var dt=prev?Math.min(t-prev,64):16.7; prev=t;
       if(!hold&&dragX===null&&!reduced){ pos+=dt*.026*dir; wrapPos(); }
       requestAnimationFrame(drift); }
     window.addEventListener('load',wrapPos); window.addEventListener('resize',wrapPos);

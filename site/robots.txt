@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ujjpik-instant-jmqpxxquacnn-blessingsholdings-1411.wix-site-host.com/sitemap.xml
