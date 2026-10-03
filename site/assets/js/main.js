@@ -60,7 +60,7 @@
 
   /* slow, eased page scroll (mouse wheel / trackpad only; touch stays native) */
   var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var target=window.scrollY, cur=target, raf=0, lastT=0, ease=.06;
+  var target=window.scrollY, cur=target, raf=0, lastT=0, ease=.06, nativeUntil=0;
   function maxY(){ return root.scrollHeight-window.innerHeight; }
   function jump(y){ window.scrollTo({top:y,behavior:'instant'}); }
   function step(t){
@@ -75,7 +75,10 @@
       if(e.ctrlKey||e.defaultPrevented||d.body.style.overflow==='hidden') return;
       if(Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
       /* trackpads and smooth-scrolling mice send small, frequent steps: leave those to the browser. Only notched wheels are eased. */
-      if(e.deltaMode===0&&Math.abs(e.deltaY)<50) return;
+      /* decide per gesture, never per event: anything that looks like a trackpad or smooth-scrolling mouse (small or fractional steps) makes the next second native, and any running glide is dropped so the two never fight over the scroll position. Only a classic notched wheel is eased. */
+      var now=Date.now(), adx=Math.abs(e.deltaY);
+      if(e.deltaMode===0&&(adx<100||adx%1!==0||adx%100!==0&&adx%120!==0)) nativeUntil=now+1000;
+      if(now<nativeUntil){ if(raf){ cancelAnimationFrame(raf); raf=0; lastT=0; } target=cur=window.scrollY; return; }
       e.preventDefault();
       var dy=e.deltaMode===1?e.deltaY*32:e.deltaMode===2?e.deltaY*window.innerHeight:e.deltaY;
       if(!raf){ target=cur=window.scrollY; }
