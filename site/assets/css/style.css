@@ -505,20 +505,13 @@ body.xmas .foot-grid a:hover{color:var(--x-gold-lt)}
 .overlay nav a.nav-xmas{color:var(--gold)}
 .overlay nav a.nav-xmas:hover{color:#F0DC8E}
 
-/* phone: the tree and its star shimmy every 4.5s, with a white "tap me!" note above the star */
+/* the tree and its star shimmy every 4.5s on phones; a white "tap me!" note sits just right of the star */
 .hero-shake{position:absolute;inset:0;pointer-events:none}
-.hero-tap{display:none}
+.hero-tap{display:block;position:absolute;z-index:4;left:52.3%;bottom:calc(96% + var(--W) * .147 + 4px);transform:translateX(-50%);color:var(--head);font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.2;letter-spacing:.02em;white-space:nowrap;pointer-events:none}
+html[data-theme="night"] .hero-tap{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 @media (max-width:640px){
   .hero-shake{position:absolute;inset:0;transform-origin:50% 100%;animation:treeshimmy 4.5s ease-in-out infinite}
-  .hero-tap{display:block;position:absolute;z-index:4;left:52.3%;bottom:calc(96% + 34px);transform:translateX(-50%);color:#fff;font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.2;letter-spacing:.02em;white-space:nowrap;text-shadow:0 1px 6px rgba(0,0,0,.6);pointer-events:none}
+  .hero-tap{bottom:calc(96% + 34px)}
 }
 @keyframes treeshimmy{0%{transform:rotate(0)}2%{transform:rotate(-2.2deg)}4%{transform:rotate(2deg)}6%{transform:rotate(-1.6deg)}8%{transform:rotate(1.2deg)}10%{transform:rotate(-.6deg)}12%,100%{transform:rotate(0)}}
 @media (prefers-reduced-motion:reduce){ .hero-shake{animation:none!important} }
-
-/* desktop: a hand-drawn arrow runs from the C of "Celebrate" to the star (placed by main.js) */
-.hero-arrow{display:none}
-@media (min-width:641px){
-  .hero-arrow{display:block;position:absolute;z-index:1;left:0;top:0;height:auto;max-width:none;opacity:0;pointer-events:none;user-select:none;transition:opacity .5s ease}
-  .hero-arrow.on{opacity:1}
-}
-html[data-theme="night"] .hero-arrow{filter:invert(1)}

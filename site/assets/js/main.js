@@ -243,34 +243,3 @@
   if(cue.complete===false) cue.addEventListener('load',place);
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(place);
 })();
-
-/* desktop: point the arrow from the C of "Celebrate" to the star, whatever the window size */
-(function(){
-  var hero=document.querySelector('.hero'), arrow=document.querySelector('.hero-arrow'), msg=document.querySelector('.hero-msg'), wrap=document.querySelector('.hero-tree-wrap');
-  if(!hero||!arrow||!msg||!wrap) return;
-  var H={x:.01,y:.61}, T={x:.98,y:.94}, AR=600/141;   /* arrow head and tail as fractions of the drawing */
-  function place(){
-    if(window.innerWidth<=640){ arrow.classList.remove('on'); return; }
-    var hr=hero.getBoundingClientRect(), mr=msg.getBoundingClientRect(), wr=wrap.getBoundingClientRect();
-    if(!mr.width||!wr.width) return;
-    var starX=wr.left+wr.width*.523-hr.left, starY=wr.top+wr.height*.04-hr.top, starW=wr.width*.3;
-    var tx=mr.left-hr.left+mr.width*.082, ty=mr.top-hr.top+mr.height*.17;  /* the upper curl of the C */
-    var hx=starX+starW*.47+8, hy=starY+starW*.03+3;                      /* just clear of the star's rightmost point */
-    var gx=hx-tx, gy=hy-ty, gl=Math.hypot(gx,gy)||1;
-    tx+=gx/gl*9; ty+=gy/gl*9;                                            /* and just clear of the C */
-    var dx=hx-tx, dy=hy-ty, d=Math.hypot(dx,dy);
-    var lift=Math.max(10,mr.height*.14); tx+=0; ty-=lift; hx+=0; hy-=lift;   /* same size and angle, begun above the C */
-    if(d<14){ arrow.classList.remove('on'); return; }
-    var w0=1000, h0=w0/AR;                                              /* natural size, only for the angle */
-    var nx=(H.x-T.x)*w0, ny=(H.y-T.y)*h0, n=Math.hypot(nx,ny);
-    var W=d/n*w0, Hh=W/AR, ang=Math.atan2(dy,dx)-Math.atan2(ny,nx);
-    arrow.style.width=W+'px'; arrow.style.height=Hh+'px';
-    arrow.style.left=(tx-T.x*W)+'px'; arrow.style.top=(ty-T.y*Hh)+'px';
-    arrow.style.transformOrigin=(T.x*100)+'% '+(T.y*100)+'%';
-    arrow.style.transform='rotate('+ang+'rad)';
-    arrow.classList.add('on');
-  }
-  place(); window.addEventListener('resize',place); window.addEventListener('load',place);
-  if(msg.complete===false) msg.addEventListener('load',place);
-  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(place);
-})();
