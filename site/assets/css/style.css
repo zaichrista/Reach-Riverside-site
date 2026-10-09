@@ -424,6 +424,9 @@ html[data-theme="night"] .xmas .mh,html[data-theme="night"] .xmas .mrow{border-c
 .card .x-inc small{font-size:13px;opacity:.75}
 .x-extra{max-width:1240px;margin:0 auto;padding:72px 44px;display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:start}
 .x-extra p{max-width:30em;font-size:15.5px;margin:0 0 1em}
+.x-terms-link{font-size:inherit;vertical-align:baseline;margin-left:.15em;color:var(--head);text-decoration:none}
+.x-terms-link:hover,.x-terms-link:focus-visible{text-decoration:underline}
+.x-extra .x-terms{max-width:none;margin:1em 0 0;font-size:10px;line-height:1.45;color:var(--fg);opacity:.78;text-align:justify;scroll-margin-top:24px}
 .x-ent{list-style:none;margin:0 0 1em;padding:0;display:flex;flex-wrap:wrap;gap:8px 10px}
 .x-ent li{padding:.4em 1.1em;border:1px solid var(--x-gold);border-radius:999px;font-size:14px;color:var(--head)}
 .x-feast{background:rgba(107,15,31,.88);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:#EADFB8;text-align:center;padding:84px 44px}
