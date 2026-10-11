@@ -94,7 +94,7 @@ html[data-theme="night"] .toast{background:var(--cream);color:var(--blue)}
 html[data-theme="night"] .hero{background:radial-gradient(55% 50% at 8% 18%,rgba(212,175,55,.14),transparent 70%),radial-gradient(50% 45% at 92% 88%,rgba(58,64,88,.5),transparent 72%),radial-gradient(40% 40% at 4% 92%,rgba(58,64,88,.38),transparent 70%),#0E1220}
 .clock{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--fg);margin:0}
 .hero-stage{display:contents}
-.hero-tree-wrap{--th:88svh;--W:calc(var(--th) * 1024 / 1535);--c:max(calc((100vw - var(--cw)) / 2),calc(var(--W) / 2));position:absolute;bottom:0;height:var(--th);width:var(--W);left:calc(var(--c) - var(--W) / 2);pointer-events:none}
+.hero-tree-wrap{--th:min(88svh,calc((100vw - 80px) * .72));--W:calc(var(--th) * 1024 / 1535);--c:max(calc((100vw - var(--cw)) / 2),calc(var(--W) / 2));position:absolute;bottom:0;height:var(--th);width:var(--W);left:calc(var(--c) - var(--W) / 2);pointer-events:none}
 .hero-tree-link{position:absolute;inset:0;z-index:2;pointer-events:none;-webkit-tap-highlight-color:transparent}
 .hero-tree{position:absolute;inset:0;z-index:0;width:100%;height:100%;user-select:none;pointer-events:none}
 .hero-star{animation:starpulse 2s ease-in-out infinite;position:absolute;z-index:3;left:52.3%;top:4%;width:30%;transform:translate(-50%,-50%);pointer-events:auto;transition:filter .4s ease,transform .4s ease}
@@ -279,6 +279,8 @@ dl.facts{margin-left:0;margin-right:0}
   .hero{padding-top:80px}
   .hero{--cw:calc(100vw - 32px)}
   .hero-card{aspect-ratio:4/5;max-height:50svh;border-radius:14px;margin-top:22px}
+  .up-strip{left:auto;right:12px;bottom:12px;width:min(190px,52%);padding:12px 14px}
+  .up-strip li:nth-child(n+3){display:none}
   .hero-tree-wrap{--th:var(--cue-th,40svh);z-index:3;left:calc(var(--W) * -.2)}
   .hero-msg{width:min(88vw,380px);margin:0 auto 4px}
   .daynight,.scroll-cue{position:relative;z-index:4}
@@ -367,7 +369,16 @@ html[data-theme="night"] .dayparts::before{filter:invert(1);mix-blend-mode:scree
 @media (max-width:1100px) and (max-height:560px){
   .part-copy p,.group p{display:none}
 }
-@media (max-width:1100px){ .home .intro figure{display:none} .home .intro{min-height:100svh;padding-bottom:24px} }
+@media (max-width:1100px){
+  .home .intro{grid-template-columns:1.2fr .8fr;gap:4vw;min-height:100svh;padding:88px 20px 24px}
+  .home .intro figure img{height:min(calc(100svh - 180px),560px);aspect-ratio:auto}
+  .home .intro p{font-size:14px;line-height:1.45}
+}
+@media (max-width:560px){
+  .home .intro{grid-template-columns:1.4fr .6fr;gap:12px;padding-left:16px;padding-right:16px}
+  .home .intro p{font-size:13px}
+  .home .intro figure img{object-position:70% 50%}
+}
 
 /* timeline: always shown through the day parts; only the current time of day is named, every tick stays clickable */
 .timeline{width:44px}
@@ -518,3 +529,37 @@ html[data-theme="night"] .hero-tap{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.
 }
 @keyframes treeshimmy{0%{transform:rotate(0)}2%{transform:rotate(-2.2deg)}4%{transform:rotate(2deg)}6%{transform:rotate(-1.6deg)}8%{transform:rotate(1.2deg)}10%{transform:rotate(-.6deg)}12%,100%{transform:rotate(0)}}
 @media (prefers-reduced-motion:reduce){ .hero-shake{animation:none!important} }
+
+/* About: sit the intro closer to the menu bar */
+.about .page{padding-top:104px}
+.about .intro{min-height:0;align-items:start;padding-top:16px;padding-bottom:56px}
+.about .intro figure img{height:min(calc(100svh - 160px),640px)}
+@media (max-width:1100px){ .about .page{padding-top:88px} .about .intro{padding-top:12px} .about .intro figure img{height:auto} }
+
+/* coming up: homepage strip + what's on band */
+.up-strip{position:absolute;z-index:3;right:14px;bottom:14px;width:min(220px,28%);padding:14px 16px;border-radius:12px;background:rgba(247,243,233,.92);color:var(--blue);text-decoration:none;text-align:left;font-size:14px;line-height:1.35;box-shadow:0 14px 40px -18px rgba(8,12,32,.6);transition:transform .3s,background .3s}
+.up-strip:hover{transform:translateY(-3px);background:#F7F3E9}
+.up-strip[hidden],.up-band[hidden]{display:none}
+.up-strip b{display:block;font-family:var(--label);font-weight:400;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#8f6f0f;margin-bottom:8px}
+.up-strip ul{list-style:none;margin:0 0 10px;padding:0}
+.up-strip li{padding:6px 0;border-top:1px solid rgba(14,18,32,.18)}
+.up-strip li span{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.up-strip u{font-size:13px;text-underline-offset:3px}
+.up-band{max-width:1240px;margin:24px auto 48px;padding:0 44px;color:var(--head)}
+.up-band h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,3vw,2.5rem);margin:0 0 .6em;text-transform:lowercase}
+.up-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px}
+.up-card{border-top:1px solid var(--rule);padding-top:16px;display:flex;flex-direction:column}
+.up-card img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:4px;margin-bottom:14px}
+.up-card .tag{font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+.up-card h3{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin:.2em 0 .3em;text-transform:lowercase}
+.up-card p{margin:0 0 1em;font-size:15.5px;color:var(--fg)}
+.up-card .pill{align-self:flex-start;margin-top:auto}
+@media (max-width:860px){.up-band{padding:0 20px}}
+
+/* seasonal menu tabs (menus come from the Wix CMS) */
+.menu-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0 0 28px}
+.menu-tab{font:inherit;font-family:var(--sans);font-size:14px;letter-spacing:.02em;padding:.7em 1.5em;border-radius:999px;border:1px solid var(--fg);background:transparent;color:var(--fg);cursor:pointer}
+.menu-tab:hover,.menu-tab[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.menu-tab:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.menu-intro{text-align:center;max-width:36em;margin:0 auto 24px;color:var(--head)}
+.menu-note{text-align:center;color:var(--head);margin:40px 0}
