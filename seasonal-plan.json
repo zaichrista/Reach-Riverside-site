@@ -1,0 +1,386 @@
+{
+ "collections": [
+  {
+   "id": "seasonalMenus",
+   "displayName": "Seasonal Menus",
+   "fields": [
+    {
+     "key": "menu",
+     "displayName": "Menu (tab name, e.g. Wines)",
+     "type": "TEXT"
+    },
+    {
+     "key": "section",
+     "displayName": "Section (heading, e.g. White Wines)",
+     "type": "TEXT"
+    },
+    {
+     "key": "name",
+     "displayName": "Dish / drink name",
+     "type": "TEXT"
+    },
+    {
+     "key": "price",
+     "displayName": "Price (\u00a3, numbers only)",
+     "type": "TEXT"
+    },
+    {
+     "key": "description",
+     "displayName": "Description",
+     "type": "TEXT"
+    },
+    {
+     "key": "dietary",
+     "displayName": "Dietary (V VG GF N)",
+     "type": "TEXT"
+    },
+    {
+     "key": "glassPrice",
+     "displayName": "Glass price (wines)",
+     "type": "TEXT"
+    },
+    {
+     "key": "bottlePrice",
+     "displayName": "Bottle price (wines)",
+     "type": "TEXT"
+    },
+    {
+     "key": "glassSize",
+     "displayName": "Glass size heading (wines, e.g. 175ml)",
+     "type": "TEXT"
+    },
+    {
+     "key": "sectionNote",
+     "displayName": "Section note (optional, on first line of section)",
+     "type": "TEXT"
+    },
+    {
+     "key": "isSubheading",
+     "displayName": "Sub-heading line (tick)",
+     "type": "BOOLEAN"
+    },
+    {
+     "key": "hide",
+     "displayName": "HIDE this line (tick)",
+     "type": "BOOLEAN"
+    },
+    {
+     "key": "live",
+     "displayName": "MENU IS LIVE (tick on any ONE line of the menu)",
+     "type": "BOOLEAN"
+    },
+    {
+     "key": "sortOrder",
+     "displayName": "Order (optional)",
+     "type": "NUMBER"
+    }
+   ],
+   "items": [
+    {
+     "menu": "Christmas Menu",
+     "section": "Starters",
+     "name": "Prawn Cocktail",
+     "price": "",
+     "description": "Lettuce, cucumber, avocado & spiced Marie Rose sauce",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1360,
+     "live": true
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Starters",
+     "name": "Smoked Salmon",
+     "price": "",
+     "description": "Horseradish cr\u00e8me fra\u00eeche, capers, dill & lemon",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1370,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Starters",
+     "name": "Burrata Salad",
+     "price": "",
+     "description": "Heritage tomatoes, basil pesto & balsamic",
+     "dietary": "V",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1380,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Starters",
+     "name": "Wild Mushroom Arancini",
+     "price": "",
+     "description": "Truffle mayonnaise & Parmesan",
+     "dietary": "V",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1390,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Starters",
+     "name": "Crispy Calamari",
+     "price": "",
+     "description": "Garlic aioli",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1400,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Mains",
+     "name": "Traditional Roast Turkey",
+     "price": "",
+     "description": "Sage & onion stuffing, crisp roast potatoes, seasonal vegetables, cranberry sauce & rich turkey gravy",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1410,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Mains",
+     "name": "Chargrilled Lamb Chops",
+     "price": "",
+     "description": "Roasted sweet potatoes, house salad & mint pesto",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1420,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Mains",
+     "name": "Grilled Chicken Skewer",
+     "price": "",
+     "description": "Lebanese-style, saffron rice, garlic sauce & dressed leaves",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1430,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Mains",
+     "name": "Pan-Roasted Salmon",
+     "price": "",
+     "description": "Saut\u00e9ed garlic green beans, Caf\u00e9 de Paris sauce",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1440,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Mains",
+     "name": "Moorish Vegetable Couscous",
+     "price": "",
+     "description": "Root vegetables, chickpeas, herbs & coriander",
+     "dietary": "VG",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1450,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Desserts",
+     "name": "Traditional Christmas Pudding",
+     "price": "",
+     "description": "Rich festive fruits & warming spices, served with brandy sauce",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1460,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Desserts",
+     "name": "Apple Tarte Tatin",
+     "price": "",
+     "description": "Caramelised apples in buttery pastry, served with vanilla ice cream",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1470,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Desserts",
+     "name": "Chocolate & Salted Caramel Pinecone",
+     "price": "",
+     "description": "Milk & dark chocolate mousse, salted caramel heart, chocolate fudge cake & cocoa velvet",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1480,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Desserts",
+     "name": "Madagascan Vanilla Cheesecake",
+     "price": "",
+     "description": "Served with biscuit crumb",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1490,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Desserts",
+     "name": "Fresh Fruit Platter",
+     "price": "",
+     "description": "Seasonal fruits, berry compote",
+     "dietary": "VG GF",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1500,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Additional Festive Sides",
+     "name": "Pigs in Blankets",
+     "price": "",
+     "description": "+ 6 supplementary",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1510,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Additional Festive Sides",
+     "name": "Creamy Mashed Potato",
+     "price": "",
+     "description": "",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1520,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Additional Festive Sides",
+     "name": "Garden Peas & Broad Beans",
+     "price": "",
+     "description": "",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1530,
+     "live": false
+    },
+    {
+     "menu": "Christmas Menu",
+     "section": "Additional Festive Sides",
+     "name": "Buttered Garlic Green Beans",
+     "price": "",
+     "description": "with roasted almonds",
+     "dietary": "",
+     "glassPrice": "",
+     "bottlePrice": "",
+     "glassSize": "",
+     "sectionNote": "",
+     "isSubheading": false,
+     "hide": false,
+     "sortOrder": 1540,
+     "live": false
+    }
+   ]
+  }
+ ]
+}

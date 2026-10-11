@@ -1,16 +1,20 @@
-/* Loads the menu from the Wix CMS (one collection, "menu": a row per dish or drink) and hands it to
-   menus.js to draw. The restaurant edits it in the Wix dashboard (Content Manager > Menu).
-   - Rows are grouped by their Menu column (a tab) and then by their Section column (a heading).
-   - A row with HIDE ticked is left out; a menu with no visible rows has no tab.
-   - Order: the optional Order number; rows without one follow in the order they were added.
-     Menus and sections are ordered by their lowest-numbered row.
-   - With data-menu="<slug>" on #menu-root a page draws just that menu (the Christmas page);
-     otherwise every menu is listed, as tabs when there is more than one.
-   The last good copy is kept in localStorage so repeat visits paint instantly. */
+/* Loads a menu from the Wix CMS and hands it to menus.js to draw. The restaurant edits it in the Wix
+   dashboard (Content Manager). Two tables use this one script, chosen by data-collection on #menu-root:
+   - "menu" (default): the everyday menus. Rows are grouped by their Menu column (a tab) and then by Section.
+   - "seasonalMenus": the same columns plus "MENU IS LIVE". A seasonal menu is on the website only while
+     at least one of its lines has that ticked.
+   A row with HIDE ticked is left out; a menu with no visible rows has no tab. Order: the optional Order
+   number; rows without one follow in the order they were added; menus and sections are ordered by their
+   lowest-numbered row.
+   With data-menu="<slug>" on #menu-root a page draws just that menu; otherwise every menu is listed, as tabs
+   when there is more than one. When a seasonal page's menu is not live the section around #menu-root is
+   hidden. The last good copy is kept in localStorage so repeat visits paint instantly. */
 import { queryItems } from "../../js/wix/items.js";
 
 var root = document.getElementById("menu-root");
-var CACHE = "reach-menu-cache-v4";
+var COLLECTION = (root && root.getAttribute("data-collection")) || "menu";
+var SEASONAL = COLLECTION === "seasonalMenus";
+var CACHE = "reach-menu-cache-v5-" + COLLECTION;
 var only = root && root.getAttribute("data-menu");
 
 function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
@@ -26,7 +30,7 @@ async function all(collectionId, query) {
 }
 
 async function fetchAll() {
-  return { rows: await all("menu", { sort: [{ field: "sortOrder" }] }) };
+  return { rows: await all(COLLECTION, { sort: [{ field: "sortOrder" }] }) };
 }
 
 function slug(t) { return String(t || "").toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
@@ -38,7 +42,9 @@ function byOrder(a, b) {
 /* rows -> [{ slug, title, sections: [{ id, title, note, wine, head, items }] }], in display order */
 function group(d) {
   var menus = {}, list = [];
-  d.rows.filter(function (r) { return !r.hide && r.menu && r.section && r.name; }).sort(byOrder).forEach(function (r) {
+  var liveMenus = {};
+  if (SEASONAL) d.rows.forEach(function (r) { if (r.live && r.menu) liveMenus[slug(r.menu)] = true; });
+  d.rows.filter(function (r) { return !r.hide && r.menu && r.section && r.name && (!SEASONAL || liveMenus[slug(r.menu)]); }).sort(byOrder).forEach(function (r) {
     var mk = slug(r.menu), m = menus[mk];
     if (!m) { m = menus[mk] = { slug: mk, title: String(r.menu).trim(), order: num(r.sortOrder), sections: {}, list: [] }; list.push(m); }
     var sk = slug(r.section), s = m.sections[sk];
@@ -90,6 +96,13 @@ function draw(d) {
   drawn = key;
   var all = group(d);
   live = only ? all.filter(function (m) { return m.slug === only; }) : all;
+  if (!live.length && SEASONAL) {
+    var wrap = root.closest("section");
+    if (wrap) wrap.style.display = "none"; else root.innerHTML = "";
+    tabs.hidden = intro.hidden = true;
+    return;
+  }
+  if (SEASONAL) { var w = root.closest("section"); if (w) w.style.display = ""; }
   if (!live.length) { root.innerHTML = '<p class="menu-note">Our menus are being updated. Please call us on <a href="tel:02081677999">020 8167 7999</a>.</p>'; tabs.hidden = intro.hidden = true; return; }
   show(wanted() || live[0].slug);
 }
