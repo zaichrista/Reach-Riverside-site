@@ -1,17 +1,13 @@
 /* Loads the menus from the Wix CMS (collections: menus, menuSections, menuItems) and hands them to
    menus.js to draw. The restaurant edits these in the Wix dashboard (Content Manager).
-   Visibility of a menu, in order:
-     1. "HIDE on website" ticked  -> never shown (manual override).
-     2. "SHOW on website now" ticked -> shown, whatever the dates say (manual override).
-     3. otherwise it shows automatically while today is within its dates (either date may be left blank;
-        with no dates at all it stays hidden).
-   Pages: with data-menu="<slug>" on #menu-root only that menu is drawn (hidden only by rule 1);
-   without it every visible menu is listed, with tabs when there is more than one.
-   The last good copy is kept in localStorage so repeat visits paint instantly. */
+   A menu shows on the Menus page while its "Show on website" box is ticked (tick it to publish a seasonal
+   menu, untick it to take it down). With data-menu="<slug>" on #menu-root a page draws just that menu,
+   whatever the box says (the Christmas page); without it every ticked menu is listed, with tabs when
+   there is more than one. The last good copy is kept in localStorage so repeat visits paint instantly. */
 import { queryItems } from "../../js/wix/items.js";
 
 var root = document.getElementById("menu-root");
-var CACHE = "reach-menu-cache-v2";
+var CACHE = "reach-menu-cache-v3";
 var only = root && root.getAttribute("data-menu");
 
 function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
@@ -31,19 +27,6 @@ async function fetchAll() {
   var sections = await all("menuSections", { sort: [{ field: "sortOrder" }] });
   var items = await all("menuItems", { sort: [{ field: "sortOrder" }] });
   return { menus: menus, sections: sections, items: items };
-}
-
-function todayLondon() {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/London", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
-}
-
-function isLive(m, today) {
-  if (m.hideOnWebsite) return false;
-  if (m.showOnWebsite) return true;
-  if (!m.startDate && !m.endDate) return false;
-  var from = m.startDate ? String(m.startDate).slice(0, 10) : "";
-  var to = m.endDate ? String(m.endDate).slice(0, 10) : "";
-  return (!from || from <= today) && (!to || to >= today);
 }
 
 /* sections of one menu in the shape menus.js draws */
@@ -90,10 +73,7 @@ function show(slug, fromClick) {
 
 function draw(d) {
   data = d;
-  var today = todayLondon();
-  live = only
-    ? d.menus.filter(function (m) { return m.slug === only && !m.hideOnWebsite; })
-    : d.menus.filter(function (m) { return isLive(m, today); });
+  live = d.menus.filter(function (m) { return only ? m.slug === only : m.showOnWebsite; });
   var key = JSON.stringify([d, live.map(function (m) { return m._id; })]);
   if (key === drawn) return;
   drawn = key;
