@@ -56,6 +56,10 @@ tabs.hidden = intro.hidden = true;
 
 var drawn = "", live = [], data = null;
 
+/* deep link to a menu: menus.html#m-<slug> (query strings are not reliable on the static host) */
+function wanted() { var h = location.hash; return h.indexOf("#m-") === 0 ? decodeURIComponent(h.slice(3)) : ""; }
+window.addEventListener("hashchange", function () { var w = wanted(); if (w && data && !only) show(w); });
+
 function show(slug, fromClick) {
   var menu = live.filter(function (m) { return m.slug === slug; })[0] || live[0];
   if (!menu) return;
@@ -67,7 +71,7 @@ function show(slug, fromClick) {
   intro.hidden = !menu.intro;
   window.ReachMenu.render(build(data, menu));
   if (fromClick && history.replaceState) {
-    history.replaceState(null, "", menu === live[0] ? location.pathname : "?menu=" + encodeURIComponent(menu.slug));
+    history.replaceState(null, "", menu === live[0] ? location.pathname : "#m-" + encodeURIComponent(menu.slug));
   }
 }
 
@@ -78,7 +82,7 @@ function draw(d) {
   if (key === drawn) return;
   drawn = key;
   if (!live.length) { root.innerHTML = '<p class="menu-note">Our menus are being updated. Please call us on <a href="tel:02081677999">020 8167 7999</a>.</p>'; tabs.hidden = intro.hidden = true; return; }
-  show(new URLSearchParams(location.search).get("menu") || (live[0] && live[0].slug));
+  show(wanted() || (live[0] && live[0].slug));
 }
 
 tabs.addEventListener("click", function (e) {
