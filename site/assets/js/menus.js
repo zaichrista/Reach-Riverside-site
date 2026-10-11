@@ -1,5 +1,12 @@
+/* Renders a menu (array of sections) into #menu-root. Called by menu-cms.js with the sections
+   read from the Wix CMS; if a page still defines window.MENU it renders that directly. */
 (function(){
-  var root=document.getElementById('menu-root'); if(!root||!window.MENU) return;
+  var root=document.getElementById('menu-root'); if(!root) return;
+  var onHash=null;
+  window.addEventListener('hashchange',function(){ if(onHash) onHash(); });
+  window.ReachMenu={render:render};
+  if(window.MENU) render(window.MENU);
+  function render(MENU){
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
   function money(p){
     if(!p) return '';
@@ -7,7 +14,7 @@
   }
   function tags(t){return t?'<span class="tags" aria-label="Dietary: '+esc(t.replace(/V G/,'VG'))+'">'+esc(t.split(' ').join(' · '))+'</span>':''}
   var html='', last='';
-  window.MENU.forEach(function(s){
+  MENU.forEach(function(s){
     if(s.group!==last){html+='<div class="menu-label">'+esc(s.group)+'</div>'; last=s.group;}
     var body='';
     if(s.note) body+='<p class="mh-note">'+esc(s.note)+'</p>';
@@ -42,5 +49,6 @@
     var id=location.hash.slice(1); var sec=id&&document.getElementById(id);
     if(sec&&sec.classList.contains('mh')){ secs.forEach(function(o){ setOpen(o,o===sec); }); setTimeout(function(){ var y=sec.getBoundingClientRect().top+window.scrollY-84; window.scrollTo({top:y,behavior:'smooth'}); },350); }
   }
-  window.addEventListener('hashchange',fromHash); fromHash();
+  onHash=fromHash; fromHash();
+  }
 })();
