@@ -184,3 +184,91 @@ LoginRequired: LoginRequired
     at async <anonymous> (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/@wix/cli/src/index.tsx:119:25)
 Error Info
 {}
+----- CLI crash report at 2026-10-14T19:52:16.836Z
+Error Trace
+FailedToReleaseHeadlessProject: FailedToReleaseHeadlessProject
+    at ARMClient.releaseHeadlessProject (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/@wix/arm-client/src/client.ts:234:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async wrapped (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/@wix/cli-panorama/src/usePanoramaMethodLogger.ts:47:28)
+    at async <anonymous> (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/@wix/cli-astro-commands/src/components/ReleaseCommand/ReleaseSite.tsx:33:33)
+caused by: Error: Request failed with status code 404
+    at createHttpError (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/node_modules/@wix/http-client/src/error.ts:54:10)
+    at HttpClientNode.handleRequestError (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/node_modules/@wix/http-client/src/http-client.ts:268:26)
+    at HttpClientNode.request (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/node_modules/@wix/http-client/src/http-client.ts:105:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async ARMClient.releaseHeadlessProject (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/@wix/arm-client/src/client.ts:223:24)
+    at async wrapped (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/@wix/cli-panorama/src/usePanoramaMethodLogger.ts:47:28)
+    at async <anonymous> (/Users/zairachrista/.npm/_npx/75dcc8e0e5613276/node_modules/@wix/cli-astro-commands/src/components/ReleaseCommand/ReleaseSite.tsx:33:33)
+Error Info
+{}
+Request Info
+{
+  "request": {
+    "baseURL": "https://manage.wix.com",
+    "url": "/apps-release-manager-service-web/apps/release/01764ee6-7792-42b4-b3f3-c0e9569e9596/9ba90caf-86c1-4c23-93c7-b5f31c34ddd4",
+    "method": "post",
+    "headers": {
+      "Accept": "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+      "x-wix-bi-gateway": "environment=CLI-Headless,package-version=1.1.262,package-name=release",
+      "X-XSRF-TOKEN": "nocheck",
+      "Cookie": "XSRF-TOKEN=nocheck",
+      "User-Agent": "wix-cli",
+      "authorization": "OauthNG.JWS.eyJraWQiOiJZSEJzdUpwSCIsImFsZyI6IkhTMjU2In0.eyJkYXRhIjoie1wiaW5zdGFuY2VcIjp7XCJpbnN0YW5jZUlkXCI6XCI2Zjk1Y2VjOC0zZTk4LTQ4YjktYjRlNS0xZmI5MmZjZDk5NzNcIixcImFwcERlZklkXCI6XCI2Zjk1Y2VjOC0zZTk4LTQ4YjktYjRlNS0xZmI5MmZjZDk5NzNcIixcInNpZ25EYXRlXCI6XCIyMDI2LTEwLTE0VDE5OjIxOjQ0Ljk5OFpcIixcInVpZFwiOlwiN2M1NzZlZDMtY2NkNC00NTJiLWE2NGItNmFkMTk2YTZjMDk0XCIsXCJwZXJtaXNzaW9uc1wiOlwiXCIsXCJkZW1vTW9kZVwiOmZhbHNlLFwic2l0ZU93bmVySWRcIjpcIjY3NzRmYzM1LTFkYjktNDk3My1iYTE5LTdlYmQ1Y2M0Mjk1OFwiLFwibWV0YVNpdGVJZFwiOlwiNTQwNmI1OTItZWRlYS00MjQzLThhYzUtNDg3YTNmYzRhMWZlXCIsXCJleHBpcmF0aW9uRGF0ZVwiOlwiMjAyNi0xMC0xNFQyMzoyMTo0NC45OThaXCIsXCJsb2dpbkFjY291bnRJZFwiOlwiN2M1NzZlZDMtY2NkNC00NTJiLWE2NGItNmFkMTk2YTZjMDk0XCIsXCJhb3JcIjp0cnVlLFwic2NkXCI6XCIyMDI2LTEwLTAyVDE1OjU0OjAwLjEyNlpcIixcImFjZFwiOlwiMjAxOS0wMy0yNlQxMzozNjo1OFpcIixcIndzXCI6ZmFsc2V9fSIsImlhdCI6MTc5MjAwNTcwNSwiZXhwIjoxNzkyMDIwMTA1fQ.sy1aVIfG95yseLL3uf-HJK8aTdk8XzBCWFxq9gf27U4",
+      "Content-Length": 212
+    },
+    "data": "{\"appId\":\"01764ee6-7792-42b4-b3f3-c0e9569e9596\",\"componentOverrideId\":\"9ba90caf-86c1-4c23-93c7-b5f31c34ddd4\",\"createMinorVersion\":true,\"notes\":\"Careers: five roles with Learn more popups, other documents upload\"}"
+  },
+  "response": {
+    "message": "Request failed with status code 404",
+    "status": 404,
+    "headers": {
+      "date": "Wed, 14 Oct 2026 19:52:16 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "content-length": "1199",
+      "pragma": "no-cache",
+      "cache-control": "no-store, no-cache",
+      "vary": "Accept-Encoding",
+      "x-seen-by": "WD1HRWp6HtwVKpzxLkVT7rxkNjrXdwdgtu6E0yACibU=,Ua1iSBCTq7qSXjmRCGE1N0/P7ou33eRsTYwNvjmV8bcZnhO/IrtZHNP4YaEheKnqJVELfpbKnwfIq0QNWUg7oB9slopJdhD+WySraMrpIY8=,S30xPaDk5EmV5qZoDf/jyiR5/Oudt34xlQh1hPNX4HVNbXepcVKvzQ2PsFwRyk8lHUmg8bdrA7y8ZnDa1u2utQ==,yBmilgm1XmQYu6WIhKJLVbG2k3bOkA4iiIrW+26ILmNYgeUJqUXtid+86vZww+nL,kJgOPkjZ5LDyk0UTIyW1e7Fh+Nf3JgP3SwMLEe42FhpTuXv057+/vqcSB38UVHsdBRO4tgWSESdrMIrnhlK2DlBk+AinkUjo1MKwrpa4csg=,yBmilgm1XmQYu6WIhKJLVQyuxmEFbQE9HlI6roeArZE=,mvxQ9qSAmY38asKjFCcmGztlSV86f36qKyFljj81QiwdcErEUrscDfZe/EvB3Y+TbR6kghh3LbkCiciO0+5ru3BYJ5zV9uWlY2m+EZZSwg8=",
+      "x-wix-request-id": "1792007536.6882438652011473",
+      "set-cookie": [
+        "XSRF-TOKEN=1792007536|LEVAmOPC-uUL; Path=/; Domain=.wix.com; Secure; SameSite=None"
+      ],
+      "x-robots-tag": "noindex",
+      "server": "Pepyaka",
+      "x-content-type-options": "nosniff",
+      "strict-transport-security": "max-age=120 ; includeSubDomains",
+      "via": "1.1 google",
+      "glb-x-seen-by": "wMMTADooq5AJ3cFomJ/MuXOQWGce7NCZXKms1ErOpBs=",
+      "alt-svc": "h3=\":443\"; ma=2592000"
+    },
+    "data": {
+      "message": "NOT_FOUND: [com.wixpress.devcenter.components-overrides~wix.devcenter.components.overrides.v1.ComponentsOverridesService#getComponentsOverride] Entity not found",
+      "errorCode": -100,
+      "details": {
+        "content-type": "application/grpc",
+        "sdl_sdlexceptionname": "",
+        "sdl_errordetails": "not_found { entity_id: \"9ba90caf-86c1-4c23-93c7-b5f31c34ddd4\" }",
+        "remote-error-type": "business",
+        "failed-client.method": "wix.devcenter.components.overrides.v1.ComponentsOverridesService/GetComponentsOverride",
+        "failed-client.options.authority": "com.wixpress.devcenter.components-overrides",
+        "failed-client.options.deadline": "19.950918461s from now",
+        "wix-response-context-bin": "CicKJQoZeC13aXgtcGV0cmktY29va2llLWRvbWFpbhIILndpeC5jb20Kewp5CglYLVNlZW4tQnkSbHdGZ01BTTNZV3ZLYk5WdTdTSDFYUitmVzZzZFNEY2lFMjN0K2FNS3RkNzdDQnRIdVBqQ1ZxK1lmaWVLT0t3WHVkTEVLNVBQOHg4c3d4cmd2TUxRRDJacmpwSDNFMGlXbERoNVE5aWtHNnF3PQ==",
+        "x-envoy-upstream-service-time": "14",
+        "x-seen-by": "yBmilgm1XmQYu6WIhKJLVTZWABUIg7w60fpMrdFE5DhYgeUJqUXtid+86vZww+nL",
+        "date": "Wed, 14 Oct 2026 19:52:16 GMT",
+        "server": "envoy",
+        "applicationError": {
+          "code": "NOT_FOUND",
+          "description": "",
+          "data": {
+            "notFound": {
+              "entityId": "9ba90caf-86c1-4c23-93c7-b5f31c34ddd4"
+            }
+          }
+        },
+        "tracing": {}
+      }
+    }
+  }
+}
