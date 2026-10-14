@@ -1,0 +1,17 @@
+{
+  "forms": [
+    {
+      "name": "Job application",
+      "submitText": "Send application",
+      "thankYou": "Thank you for applying to The Reach Riverside. We have received your application and will be in touch.",
+      "fields": [
+        { "label": "Role", "kind": "select", "required": true, "choices": ["Waiter / Waitress", "Barista", "Bartender"] },
+        { "label": "Hours", "kind": "radio", "required": true, "choices": ["Part time", "Full time"] },
+        { "label": "Name", "kind": "firstName", "required": true },
+        { "label": "Email", "kind": "email", "required": true },
+        { "label": "Phone", "kind": "phone", "required": true, "country": "GB" },
+        { "label": "CV", "kind": "file", "required": true, "formats": ["DOCUMENT"], "fileLimit": 1, "buttonText": "Upload your CV" }
+      ]
+    }
+  ]
+}

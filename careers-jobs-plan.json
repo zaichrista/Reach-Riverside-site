@@ -1,0 +1,19 @@
+{
+  "collections": [
+    {
+      "id": "jobs",
+      "displayName": "Jobs",
+      "fields": [
+        { "key": "title", "displayName": "Job title", "type": "TEXT" },
+        { "key": "description", "displayName": "Short description", "type": "TEXT" },
+        { "key": "hide", "displayName": "HIDE this job (tick when the role is filled)", "type": "BOOLEAN" },
+        { "key": "sortOrder", "displayName": "Order (optional)", "type": "NUMBER" }
+      ],
+      "items": [
+        { "title": "Waiter / Waitress", "description": "Look after our guests at the table, from the first drink to the last course.", "hide": false, "sortOrder": 10 },
+        { "title": "Barista", "description": "Make and serve great coffee for our guests, every day we are open.", "hide": false, "sortOrder": 20 },
+        { "title": "Bartender", "description": "Make and serve cocktails and drinks at our bar, working alongside our in-house mixologist.", "hide": false, "sortOrder": 30 }
+      ]
+    }
+  ]
+}

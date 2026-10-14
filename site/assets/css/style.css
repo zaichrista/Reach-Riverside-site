@@ -563,3 +563,31 @@ html[data-theme="night"] .hero-tap{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.
 .menu-tab:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .menu-intro{text-align:center;max-width:36em;margin:0 auto 24px;color:var(--head)}
 .menu-note{text-align:center;color:var(--head);margin:40px 0}
+
+/* Careers: open roles and the application form's radio group / CV upload */
+.jobs{max-width:1240px;margin:0 auto;padding:0 44px}
+.jobs-h{font-family:var(--serif);font-weight:400;color:var(--head);font-size:clamp(1.8rem,3vw,2.4rem);margin:24px 0 0}
+.jobs .cards{padding:0;margin:16px auto 72px}
+.jobs-none{grid-column:1/-1;color:var(--head)}
+.form .grp{display:grid;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--head)}
+.form .choices{display:flex;flex-wrap:wrap;gap:8px 24px;padding:9px 0}
+.form .choice{display:inline-flex;align-items:center;gap:8px;font-size:16px;letter-spacing:0;text-transform:none;color:var(--fg)}
+.form .choice input{padding:0;border:0;accent-color:var(--gold)}
+.form input[type=file]{border-bottom:0;padding:9px 0;font-size:15px}
+@media (max-width:1100px){ .jobs{padding:0 28px} }
+
+/* Careers: the Learn more popup */
+.job-dialog{border:0;padding:0;width:min(720px,calc(100vw - 32px));max-height:calc(100svh - 48px);overflow-y:auto;background:var(--bg);color:var(--fg);box-shadow:0 24px 80px rgba(14,18,32,.35)}
+.job-dialog::backdrop{background:rgba(14,18,32,.62)}
+body:has(.job-dialog[open]){overflow:hidden}
+.job-dialog .jd-in{padding:44px 44px 36px}
+.jd-close{position:absolute;top:10px;right:14px;width:44px;height:44px;border:0;background:transparent;color:var(--head);font-size:34px;line-height:1;cursor:pointer}
+.jd-close:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.jd-meta{margin:0 0 10px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--head)}
+.jd-title{font-family:var(--serif);font-weight:400;color:var(--head);font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.08;margin:0 0 .6em}
+.jd-body h4{font-family:var(--serif);font-weight:400;color:var(--head);font-size:1.35rem;margin:1.6em 0 .5em}
+.jd-body p{margin:0 0 1em;font-size:15.5px}
+.jd-body ul,.jd-body ol{margin:0 0 1em;padding-left:1.2em;font-size:15.5px}
+.jd-body li{margin:0 0 .45em}
+.jd-foot{margin-top:28px}
+@media (max-width:700px){ .job-dialog .jd-in{padding:48px 24px 28px} }

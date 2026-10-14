@@ -7,7 +7,7 @@ var root = document.getElementById('enquiry-root');
 var FORM_ID = (root && root.getAttribute('data-form-id')) || DEFAULT_FORM_ID;
 if (root) {
   var store = createFormStore({ formId: FORM_ID });
-  var formEl = null, sig = '', els = {};
+  var formEl = null, sig = '', els = {}, wantRole = '';
 
   var el = function (tag, attrs, text) {
     var n = document.createElement(tag);
@@ -33,7 +33,23 @@ if (root) {
       return s;
     }
     if (c === 'checkbox') return el('input', { type: 'checkbox', name: f.target });
-    if (c === 'file' || c === 'signature' || c === 'payment' || c === 'appointment' || c === 'unknown') return null;
+    if (c === 'radio') {
+      var g = el('div', { class: 'choices', role: 'radiogroup' });
+      f.choices.forEach(function (o) {
+        var r = el('label', { class: 'choice' });
+        r.appendChild(el('input', { type: 'radio', name: f.target, value: o.value }));
+        r.appendChild(document.createTextNode(o.label));
+        g.appendChild(r);
+      });
+      return g;
+    }
+    if (c === 'file') {
+      var fi = el('input', { type: 'file', name: f.target });
+      if (f.validation.accept) fi.setAttribute('accept', f.validation.accept);
+      if (f.validation.fileLimit > 1) fi.multiple = true;
+      return fi;
+    }
+    if (c === 'signature' || c === 'payment' || c === 'appointment' || c === 'unknown') return null;
     var type = { email: 'email', phone: 'tel', url: 'url', number: 'number', rating: 'number', date: 'date', time: 'time', datetime: 'datetime-local', password: 'password' }[c] || 'text';
     i = el('input', { type: type, name: f.target });
     if (f.placeholder) i.setAttribute('placeholder', f.placeholder);
@@ -49,20 +65,37 @@ if (root) {
     return i;
   }
 
+  /* A careers popup's "Apply for this role" asks for its role to be chosen: the first dropdown that offers it */
+  function pickRole() {
+    var st = store.getState();
+    if (!wantRole || !st.form) return;
+    var f = st.form.fields.filter(function (x) { return x.control === 'select' && x.choices.some(function (o) { return o.value === wantRole; }); })[0];
+    if (!f || !els[f.target]) return;
+    store.setValue(f.target, wantRole);
+    els[f.target].input.value = wantRole;
+  }
+  document.addEventListener('careers:role', function (e) { wantRole = e.detail; pickRole(); });
+
   function build(state) {
     var form = state.form;
     formEl = el('form', { class: 'form', novalidate: '' });
     els = {};
     form.fields.forEach(function (f) {
-      var lab = el('label', f.control === 'textarea' ? { class: 'full' } : {});
+      var lab = el(f.control === 'radio' ? 'div' : 'label', f.control === 'textarea' ? { class: 'full' } : f.control === 'radio' ? { class: 'grp' } : {});
       lab.appendChild(document.createTextNode(labelText(form, f)));
       var c = control(f);
       if (!c) { lab.appendChild(el('span', {}, 'This field type is not supported on this page.')); formEl.appendChild(lab); return; }
       c.setAttribute('aria-describedby', 'err-' + f.target);
-      c.addEventListener(c.tagName === 'SELECT' || c.type === 'checkbox' ? 'change' : 'input', function () {
-        store.setValue(f.target, c.type === 'checkbox' ? c.checked : c.value);
-      });
-      c.addEventListener('blur', function () { store.validate(f.target); });
+      if (f.control === 'radio') {
+        c.addEventListener('change', function (e) { store.setValue(f.target, e.target.value); store.validate(f.target); });
+      } else if (f.control === 'file') {
+        c.addEventListener('change', function () { store.setValue(f.target, Array.prototype.slice.call(c.files)); store.validate(f.target); });
+      } else {
+        c.addEventListener(c.tagName === 'SELECT' || c.type === 'checkbox' ? 'change' : 'input', function () {
+          store.setValue(f.target, c.type === 'checkbox' ? c.checked : c.value);
+        });
+        c.addEventListener('blur', function () { store.validate(f.target); });
+      }
       lab.appendChild(c);
       if (f.description) lab.appendChild(el('small', {}, f.description));
       var err = el('p', { id: 'err-' + f.target, role: 'alert', style: 'color:#b3261e;font-size:13px;margin:0;text-transform:none;letter-spacing:0' });
@@ -83,6 +116,7 @@ if (root) {
     formEl.appendChild(foot);
     formEl.addEventListener('submit', function (e) { e.preventDefault(); store.submit(e); });
     root.replaceChildren(formEl);
+    pickRole();
   }
 
   function render() {
@@ -113,7 +147,7 @@ if (root) {
   }
 
   store.subscribe(render);
-  root.textContent = 'Loading the enquiry form…';
+  root.textContent = root.getAttribute('data-loading') || 'Loading the enquiry form…';
   store.start();
   render();
 }
